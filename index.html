@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Shadow Realm</title>
+<link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f1ff;--card:#fff;--ink:#1b1740;--mut:#6a6590;--line:#ddd7f5;--pink:#e5457d;--gold:#b88400;--mint:#0f9d82;--c:#7d86a8;--r:#0f9d82;--e:#8a3ff0;--l:#d19a00;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#13102b;--card:#1d1942;--ink:#f1eeff;--mut:#a39dd0;--line:#2f2a63;--pink:#ff8fb1;--gold:#ffd84d;--mint:#5be0c0;--c:#9aa3c7;--r:#5be0c0;--e:#b98cff;--l:#ffd84d}}
+:root[data-theme="dark"]{--bg:#13102b;--card:#1d1942;--ink:#f1eeff;--mut:#a39dd0;--line:#2f2a63;--pink:#ff8fb1;--gold:#ffd84d;--mint:#5be0c0;--c:#9aa3c7;--r:#5be0c0;--e:#b98cff;--l:#ffd84d}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Tajawal,system-ui,sans-serif;line-height:1.6}
+h1,h2,h3{font-family:'Reem Kufi',Tajawal,sans-serif;margin:0}
+.wrap{max-width:880px;margin:0 auto;padding:16px}
+header{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+h1{font-size:28px}
+select,input,button{font:inherit;color:inherit}
+select,input{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.pts{font-weight:700;font-size:20px;color:var(--gold)}
+button{cursor:pointer;border:0;border-radius:10px;padding:8px 14px;background:var(--pink);color:#fff;font-weight:700}
+button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+button:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--e);outline-offset:2px}
+.team{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
+.slot{background:var(--card);border:2px dashed var(--line);border-radius:16px;padding:10px;text-align:center;min-height:190px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.slot.full{border-style:solid}
+.av{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font:700 34px 'Reem Kufi',sans-serif;color:#fff}
+.av.C{background:linear-gradient(135deg,#7d86a8,#4d5578)}.av.R{background:linear-gradient(135deg,#19c2a0,#0b7d8a)}.av.E{background:linear-gradient(135deg,#b05cff,#5a2fd6)}.av.L{background:linear-gradient(135deg,#ffcf3a,#ff7a3d)}
+.tag{font-size:12px;font-weight:700;padding:1px 8px;border-radius:99px;border:1px solid currentColor}
+.tag.C{color:var(--c)}.tag.R{color:var(--r)}.tag.E{color:var(--e)}.tag.L{color:var(--l)}
+.mut{color:var(--mut);font-size:14px}
+.total{text-align:center;font-weight:700;margin:-6px 0 14px}
+nav{display:flex;gap:6px;overflow-x:auto;border-bottom:1px solid var(--line);padding-bottom:8px}
+nav button{background:transparent;color:var(--mut);border:1px solid transparent;white-space:nowrap}
+nav button[aria-selected="true"]{background:var(--card);color:var(--ink);border-color:var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
+.card .av{width:56px;height:56px;font-size:26px}
+.row{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+.box{text-align:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;margin-top:14px}
+.rolled{font-size:60px;margin:10px 0}
+.log{margin-top:14px;padding:10px 12px;border-radius:12px;background:var(--card);border:1px solid var(--line);min-height:44px}
+.odds{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:10px 0}
+dialog{border:1px solid var(--line);border-radius:16px;background:var(--card);color:var(--ink);max-width:420px;width:92%}
+dialog::backdrop{background:rgba(10,8,30,.6)}
+.dl{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.sec{margin-top:14px}
+@media (prefers-reduced-motion:no-preference){.pop{animation:pop .35s ease}@keyframes pop{from{transform:scale(.6);opacity:0}}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Shadow Realm</h1>
+  <div style="display:flex;gap:10px;align-items:center">
+    <label>القناة <select id="ch"></select></label>
+    <span class="pts" id="pts"></span>
+  </div>
+</header>
+
+<section class="team" id="team" aria-label="فريقك"></section>
+<div class="total" id="total"></div>
+
+<nav role="tablist" id="tabs"></nav>
+<main id="view"></main>
+<div class="log" id="log" role="status" aria-live="polite">أهلاً! عندك ٣٠٠ نقطة بداية في كل قناة.</div>
+<p class="mut">نموذج تجريبي: البيانات تُحفظ في متصفحك، والمشاهدون والبائعون وهميون.</p>
+</div>
+<dialog id="dlg"></dialog>
+
+<script>
+const CH=[{id:'rim',n:'قناة ريم'},{id:'sul',n:'قناة سلطان'},{id:'nou',n:'قناة نورة'}];
+const RAR={C:'شائع',R:'نادر',E:'ملحمي',L:'أسطوري'};
+const CHARS=[
+{id:1,n:'أوسوب',r:'C',p:10,v:40},{id:2,n:'كريلين',r:'C',p:12,v:50},{id:3,n:'ساكورا',r:'C',p:14,v:55},{id:11,n:'ديكو',r:'C',p:13,v:45},
+{id:4,n:'زورو',r:'R',p:28,v:140},{id:5,n:'كاكاشي',r:'R',p:30,v:150},{id:6,n:'ليفاي',r:'R',p:34,v:170},{id:12,n:'نيزوكو',r:'R',p:32,v:160},
+{id:7,n:'ناروتو',r:'E',p:60,v:420},{id:8,n:'لوفي',r:'E',p:68,v:500},
+{id:9,n:'غوكو',r:'L',p:120,v:1800},{id:10,n:'غوجو',r:'L',p:135,v:2200}];
+const RAIDS=[
+{n:'غابة الهمس',req:30,cost:10,win:80},{n:'كهف الظلال',req:80,cost:30,win:220},
+{n:'برج التنين',req:180,cost:80,win:600},{n:'قلعة الملك',req:300,cost:200,win:1500}];
+const ODDS={C:55,R:30,E:12,L:3}, MAXMULT=3;
+const PACKS=[{n:'سحبة سريعة',cost:25,odds:{C:80,R:17,E:3,L:0}},{n:'صندوق الحظ',cost:100,odds:ODDS}];
+const SELLERS=['ساري','هند','فهد','لمى','بدر','جوري'];
+const get=id=>CHARS.find(c=>c.id===id);
+let S;
+function fresh(){S={ch:'rim',own:[],pts:{},mult:{},raids:{},mk:{},mine:{},tab:'shop'};
+ CH.forEach(c=>{S.pts[c.id]=300;S.mult[c.id]=1;S.raids[c.id]=true;S.mine[c.id]=[];
+  S.mk[c.id]=[...CHARS].sort(()=>Math.random()-.5).slice(0,4).map(ch=>({cid:ch.id,price:Math.round(ch.v*(.8+Math.random()*.6)),by:SELLERS[Math.random()*6|0]}));});}
+function load(){try{S=JSON.parse(localStorage.getItem('raidArena'))}catch(e){S=null}if(!S)fresh()}
+function save(){try{localStorage.setItem('raidArena',JSON.stringify(S))}catch(e){}}
+const $=s=>document.querySelector(s);
+const pts=()=>S.pts[S.ch], add=n=>{S.pts[S.ch]+=n;save()};
+const say=t=>{$('#log').textContent=t};
+const power=()=>S.own.reduce((a,i)=>a+get(i).p,0);
+const av=(c,cls='')=>`<div class="av ${c.r} ${cls}">${c.n[0]}</div>`;
+const tag=c=>`<span class="tag ${c.r}">${RAR[c.r]}</span>`;
+
+function head(){
+ $('#pts').textContent=pts().toLocaleString('ar-EG')+' نقطة';
+ $('#team').innerHTML=[0,1,2].map(i=>{const c=get(S.own[i]);return c?
+  `<div class="slot full">${av(c)}<b>${c.n}</b>${tag(c)}<span class="mut">قوة ${c.p}</span><button class="ghost" onclick="sellDlg(${i})">بيع</button></div>`:
+  `<div class="slot"><span class="mut">خانة فارغة</span></div>`}).join('');
+ $('#total').textContent='قوة الفريق: '+power();
+}
+const TABS=[['shop','المتجر'],['box','صندوق الحظ'],['raid','الغارات'],['mkt','السوق'],['chat','الشات والستريمر']];
+function tabs(){$('#tabs').innerHTML=TABS.map(([k,t])=>`<button role="tab" aria-selected="${S.tab===k}" onclick="S.tab='${k}';render()">${t}</button>`).join('')}
+
+function dlg(html){const d=$('#dlg');d.innerHTML=html;d.showModal()}
+function closeDlg(){$('#dlg').close()}
+/* give a character; if team is full, ask which one to replace */
+function give(cid,onDone,onCancel){
+ if(S.own.length<3){S.own.push(cid);save();onDone&&onDone();return}
+ dlg(`<h3>فريقك مكتمل</h3><p>اختر شخصية تستبدلها بـ <b>${get(cid).n}</b>:</p><div class="dl">${S.own.map((o,i)=>`<button class="ghost" onclick="swap(${i},${cid})">${get(o).n}</button>`).join('')}</div><div class="dl"><button class="ghost" onclick="closeDlg();window._cancel()">إلغاء</button></div>`);
+ window._done=onDone;window._cancel=onCancel||(()=>{});
+}
+function swap(i,cid){S.own[i]=cid;save();closeDlg();window._done&&window._done()}
+
+function render(){head();tabs();const v=$('#view');
+ if(S.tab==='shop')v.innerHTML=`<div class="grid">${CHARS.map(c=>{const has=S.own.includes(c.id);return `<div class="card">${av(c)}<b>${c.n}</b>${tag(c)}<span class="mut">قوة ${c.p}</span><button ${has||pts()<c.v*1?'disabled':''} onclick="buy(${c.id})">${has?'تملكه':'اشترِ بـ '+c.v}</button></div>`}).join('')}</div>`;
+ if(S.tab==='box')v.innerHTML=`<div class="box"><div class="rolled" id="rolled">🎁</div><p class="mut">إذا نزلت لك شخصية تملكها، تتحول إلى ٣٠٪ من سعرها نقاطاً.</p></div>`+PACKS.map((p,i)=>`<div class="box"><h2>${p.n}</h2><div class="odds">${Object.keys(p.odds).filter(k=>p.odds[k]).map(k=>`<span class="tag ${k}">${RAR[k]} ${p.odds[k]}٪</span>`).join('')}</div><button onclick="roll(${i})" ${pts()<p.cost?'disabled':''}>افتح بـ ${p.cost} نقطة</button></div>`).join('');
+ if(S.tab==='raid')v.innerHTML=S.raids[S.ch]?RAIDS.map((r,i)=>{const ch=Math.min(95,Math.round(power()>=r.req?85:power()/r.req*85));return `<div class="row"><div><b>${r.n}</b><div class="mut">تحتاج قوة ${r.req} · رسوم الدخول ${r.cost} · الجائزة ${r.win}</div><div class="mut">فرصة الفوز: ${S.own.length?ch:0}٪</div></div><button ${!S.own.length||pts()<r.cost?'disabled':''} onclick="raid(${i})">ادخل</button></div>`}).join(''):`<div class="row">الستريمر أوقف الغارات في هذه القناة.</div>`;
+ if(S.tab==='mkt'){const L=S.mk[S.ch],M=S.mine[S.ch];
+  v.innerHTML=`<h3 class="sec">معروض للبيع في ${CH.find(c=>c.id===S.ch).n}</h3>`+(L.length?L.map((l,i)=>{const c=get(l.cid),has=S.own.includes(c.id);return `<div class="row"><div style="display:flex;gap:10px;align-items:center">${av(c,'')}<div><b>${c.n}</b> ${tag(c)}<div class="mut">البائع: ${l.by} · قوة ${c.p}</div></div></div><button ${has||pts()<l.price?'disabled':''} onclick="mbuy(${i})">${has?'تملكه':'اشترِ بـ '+l.price}</button></div>`}).join(''):'<div class="row mut">ما فيه عروض الآن.</div>')+
+  `<h3 class="sec">عروضك</h3>`+(M.length?M.map(l=>`<div class="row"><span>${get(l.cid).n} بسعر ${l.price}</span><span class="mut">بانتظار مشترٍ...</span></div>`).join(''):'<div class="row mut">للبيع اضغط «بيع» تحت شخصيتك في الأعلى.</div>')}
+ if(S.tab==='chat')v.innerHTML=`<div class="box"><h2>محاكاة الشات</h2><p class="mut">كأنك تكتب في شات التويتش. كل رسالة تعطي نقاط (مرة كل ١٠ ثواني)، وتجلس في الموقع تعطيك نقطة كل ١٠ ثواني.</p><button id="msg" onclick="chat()">أرسل رسالة في الشات</button></div>
+ <div class="box"><h2>لوحة الستريمر</h2><p class="mut">يتحكم ستريمر هذه القناة بالمعدلات (الحد الأعلى ×${MAXMULT}).</p><label>مضاعف النقاط <select onchange="S.mult[S.ch]=+this.value;save()">${[1,1.5,2,3].map(m=>`<option ${S.mult[S.ch]===m?'selected':''}>${m}</option>`).join('')}</select></label>
+ <p><label><input type="checkbox" ${S.raids[S.ch]?'checked':''} onchange="S.raids[S.ch]=this.checked;save()"> الغارات مفعّلة</label></p><button class="ghost" onclick="if(confirm('تمسح كل التقدم؟')){fresh();save();render()}">إعادة ضبط اللعبة</button></div>`;
+}
+function buy(id){const c=get(id);if(pts()<c.v)return;give(id,()=>{add(-c.v);say('اشتريت '+c.n);render()})}
+function roll(i){const P=PACKS[i];if(pts()<P.cost)return;add(-P.cost);let x=Math.random()*100,k='C';for(const r of ['C','R','E','L']){if(x<P.odds[r]){k=r;break}x-=P.odds[r]}
+ const pool=CHARS.filter(c=>c.r===k),c=pool[Math.random()*pool.length|0];
+ head();const el=$('#rolled');el.innerHTML=av(c,'pop').replace('class="av','style="margin:auto" class="av');
+ if(S.own.includes(c.id)){const r=Math.round(c.v*.3);add(r);say(`نزلت ${c.n} وأنت تملكها، حصلت ${r} نقطة.`);setTimeout(render,1400);return}
+ give(c.id,()=>{say('نزلت لك '+c.n+' ('+RAR[c.r]+')');setTimeout(render,900)},()=>{say('تجاهلت '+c.n);render()})}
+function raid(i){const r=RAIDS[i];if(pts()<r.cost)return;add(-r.cost);
+ const ch=power()>=r.req?.85:power()/r.req*.85;
+ if(Math.random()<ch){add(r.win);say(`فزت في ${r.n}! +${r.win} نقطة.`)}else say(`خسرت في ${r.n}. راحت رسوم الدخول.`);render()}
+function sellDlg(i){const c=get(S.own[i]);dlg(`<h3>بيع ${c.n}</h3><p class="mut">يظهر في سوق ${CH.find(x=>x.id===S.ch).n} فقط. سعره المرجعي ${c.v}.</p><label>السعر <input id="pr" type="number" min="1" value="${c.v}"></label><div class="dl"><button onclick="list(${i})">اعرضها للبيع</button><button class="ghost" onclick="closeDlg()">إلغاء</button></div>`)}
+function list(i){const p=Math.max(1,+$('#pr').value||0),cid=S.own[i];S.own.splice(i,1);S.mine[S.ch].push({cid,price:p,t:Date.now()});save();closeDlg();say('عرضت '+get(cid).n+' في السوق.');S.tab='mkt';render()}
+function mbuy(i){const l=S.mk[S.ch][i];if(pts()<l.price)return;give(l.cid,()=>{add(-l.price);S.mk[S.ch].splice(i,1);save();say('اشتريت '+get(l.cid).n+' من '+l.by);render()})}
+let lastChat=0;
+function chat(){const n=Date.now();if(n-lastChat<10000){say('انتظر قليلاً قبل الرسالة التالية.');return}lastChat=n;const g=Math.round(4*S.mult[S.ch]);add(g);say('رسالتك وصلت: +'+g+' نقطة');head()}
+setInterval(()=>{add(Math.round(S.mult[S.ch]));head()},10000);
+/* fake buyers pick up listings that are priced fairly */
+setInterval(()=>{CH.forEach(c=>{S.mine[c.id]=S.mine[c.id].filter(l=>{if(Date.now()-l.t>6000&&l.price<=get(l.cid).v*1.5){S.pts[c.id]+=l.price;if(c.id===S.ch)say(get(l.cid).n+' انباعت بـ '+l.price+' نقطة');return false}return true})});save();render()},4000);
+$('#ch').innerHTML=CH.map(c=>`<option value="${c.id}">${c.n}</option>`).join('');
+$('#ch').onchange=e=>{S.ch=e.target.value;save();say('انتقلت إلى '+CH.find(c=>c.id===S.ch).n+'. رصيدك هنا منفصل.');render()};
+load();$('#ch').value=S.ch;render();
+</script>
+</body>
+</html>
